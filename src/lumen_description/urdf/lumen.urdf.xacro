@@ -1,0 +1,344 @@
+<?xml version="1.0"?>
+
+<robot name="lumen"
+       xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ====================================== -->
+  <!-- 1. GROUND REFERENCE FRAME               -->
+  <!-- ====================================== -->
+
+  <link name="base_footprint"/>
+
+  <!-- ====================================== -->
+  <!-- 2. MAIN ROBOT CHASSIS                   -->
+  <!-- ====================================== -->
+
+  <link name="base_link">
+
+    <!-- Inertial properties -->
+    <!-- Preliminary 10 kg chassis estimate -->
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+
+      <mass value="10.0"/>
+
+      <!-- Approximate inertia of a uniform box -->
+      <inertia
+        ixx="0.10167"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.22467"
+        iyz="0.0"
+        izz="0.29367"/>
+    </inertial>
+
+    <!-- Visual geometry -->
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+
+      <geometry>
+        <box size="0.500 0.320 0.140"/>
+      </geometry>
+
+      <material name="graphite">
+        <color rgba="0.16 0.18 0.20 1.0"/>
+      </material>
+    </visual>
+
+    <!-- Collision geometry -->
+
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+
+      <geometry>
+        <box size="0.500 0.320 0.140"/>
+      </geometry>
+    </collision>
+
+  </link>
+
+  <!-- ====================================== -->
+  <!-- 3. CONNECT GROUND FRAME TO CHASSIS      -->
+  <!-- ====================================== -->
+
+  <joint name="base_footprint_to_base_link"
+         type="fixed">
+
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+
+    <origin xyz="0 0 0.115"
+            rpy="0 0 0"/>
+
+  </joint>
+
+  <!-- ====================================== -->
+  <!-- 4. FRONT LEFT WHEEL                    -->
+  <!-- ====================================== -->
+
+  <link name="front_left_wheel_link">
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1.0"/>
+      <inertia
+        ixx="0.001769"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0032"
+        iyz="0.0"
+        izz="0.001769"/>
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.080" length="0.045"/>
+      </geometry>
+      <material name="rubber_graphite">
+        <color rgba="0.22 0.24 0.26 1.0"/>
+      </material>
+    </visual>
+
+    <!-- Rotating visual marker for wheel inspection -->
+    <visual>
+        <origin xyz="0.040 0.023 0" rpy="0 0 0"/>
+        <geometry>
+            <box size="0.025 0.004 0.012"/>
+        </geometry>
+        <material name="safety_orange">
+            <color rgba="1.0 0.32 0.02 1.0"/>
+        </material>
+    </visual>
+
+    <visual>
+        <origin xyz="0.040 -0.023 0" rpy="0 0 0"/>
+        <geometry>
+            <box size="0.025 0.004 0.012"/>
+        </geometry>
+        <material name="safety_orange">
+            <color rgba="1.0 0.32 0.02 1.0"/>
+        </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.080" length="0.045"/>
+      </geometry>
+    </collision>
+
+  </link>
+
+  <joint name="front_left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="front_left_wheel_link"/>
+    <origin xyz="0.170 0.190 -0.035" rpy="0 0 0"/>
+    <axis xyz="0 -1 0"/>
+  </joint>
+
+
+  <!-- ====================================== -->
+  <!-- 5. REAR LEFT WHEEL                     -->
+  <!-- ====================================== -->
+
+  <link name="rear_left_wheel_link">
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1.0"/>
+      <inertia
+        ixx="0.001769"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0032"
+        iyz="0.0"
+        izz="0.001769"/>
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.080" length="0.045"/>
+      </geometry>
+      <material name="rubber_graphite">
+        <color rgba="0.22 0.24 0.26 1.0"/>
+      </material>
+    </visual>
+
+    <!-- Rotating visual marker for wheel inspection -->
+    <visual>
+        <origin xyz="0.040 0.023 0" rpy="0 0 0"/>
+        <geometry>
+            <box size="0.025 0.004 0.012"/>
+        </geometry>
+        <material name="safety_orange">
+            <color rgba="1.0 0.32 0.02 1.0"/>
+        </material>
+    </visual>
+
+    <visual>
+        <origin xyz="0.040 -0.023 0" rpy="0 0 0"/>
+        <geometry>
+            <box size="0.025 0.004 0.012"/>
+        </geometry>
+        <material name="safety_orange">
+            <color rgba="1.0 0.32 0.02 1.0"/>
+        </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.080" length="0.045"/>
+      </geometry>
+    </collision>
+
+  </link>
+
+  <joint name="rear_left_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="rear_left_wheel_link"/>
+    <origin xyz="-0.170 0.190 -0.035" rpy="0 0 0"/>
+    <axis xyz="0 -1 0"/>
+  </joint>
+
+
+  <!-- ====================================== -->
+  <!-- 6. FRONT RIGHT WHEEL                   -->
+  <!-- ====================================== -->
+
+  <link name="front_right_wheel_link">
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1.0"/>
+      <inertia
+        ixx="0.001769"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0032"
+        iyz="0.0"
+        izz="0.001769"/>
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.080" length="0.045"/>
+      </geometry>
+      <material name="rubber_graphite">
+        <color rgba="0.22 0.24 0.26 1.0"/>
+      </material>
+    </visual>
+
+    <!-- Rotating visual marker for wheel inspection -->
+    <visual>
+        <origin xyz="0.040 0.023 0" rpy="0 0 0"/>
+        <geometry>
+            <box size="0.025 0.004 0.012"/>
+        </geometry>
+        <material name="safety_orange">
+            <color rgba="1.0 0.32 0.02 1.0"/>
+        </material>
+    </visual>
+
+    <visual>
+        <origin xyz="0.040 -0.023 0" rpy="0 0 0"/>
+        <geometry>
+            <box size="0.025 0.004 0.012"/>
+        </geometry>
+        <material name="safety_orange">
+            <color rgba="1.0 0.32 0.02 1.0"/>
+        </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.080" length="0.045"/>
+      </geometry>
+    </collision>
+
+  </link>
+
+  <joint name="front_right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="front_right_wheel_link"/>
+    <origin xyz="0.170 -0.190 -0.035" rpy="0 0 0"/>
+    <axis xyz="0 -1 0"/>
+  </joint>
+
+
+  <!-- ====================================== -->
+  <!-- 7. REAR RIGHT WHEEL                    -->
+  <!-- ====================================== -->
+
+  <link name="rear_right_wheel_link">
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1.0"/>
+      <inertia
+        ixx="0.001769"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.0032"
+        iyz="0.0"
+        izz="0.001769"/>
+    </inertial>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.080" length="0.045"/>
+      </geometry>
+      <material name="rubber_graphite">
+        <color rgba="0.22 0.24 0.26 1.0"/>
+      </material>
+    </visual>
+
+    <!-- Rotating visual marker for wheel inspection -->
+    <visual>
+        <origin xyz="0.040 0.023 0" rpy="0 0 0"/>
+        <geometry>
+            <box size="0.025 0.004 0.012"/>
+        </geometry>
+        <material name="safety_orange">
+            <color rgba="1.0 0.32 0.02 1.0"/>
+        </material>
+    </visual>
+
+    <visual>
+        <origin xyz="0.040 -0.023 0" rpy="0 0 0"/>
+        <geometry>
+            <box size="0.025 0.004 0.012"/>
+        </geometry>
+        <material name="safety_orange">
+            <color rgba="1.0 0.32 0.02 1.0"/>
+        </material>
+    </visual>
+
+    <collision>
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.080" length="0.045"/>
+      </geometry>
+    </collision>
+
+  </link>
+
+  <joint name="rear_right_wheel_joint" type="continuous">
+    <parent link="base_link"/>
+    <child link="rear_right_wheel_link"/>
+    <origin xyz="-0.170 -0.190 -0.035" rpy="0 0 0"/>
+    <axis xyz="0 -1 0"/>
+  </joint>
+
+</robot>
+
+
+  
+
