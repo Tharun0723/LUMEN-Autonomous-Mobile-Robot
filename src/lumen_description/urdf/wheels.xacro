@@ -1,0 +1,90 @@
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Reusable four-wheel skid-steer module -->
+
+  <xacro:macro name="lumen_wheel" params="name x y">
+
+    <link name="${name}_wheel_link">
+
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="1.0"/>
+        <inertia
+          ixx="0.001769"
+          ixy="0.0"
+          ixz="0.0"
+          iyy="0.0032"
+          iyz="0.0"
+          izz="0.001769"/>
+      </inertial>
+
+      <!-- Main tyre -->
+
+      <visual>
+        <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+        <geometry>
+          <cylinder radius="0.080" length="0.045"/>
+        </geometry>
+        <material name="rubber_graphite">
+          <color rgba="0.22 0.24 0.26 1.0"/>
+        </material>
+      </visual>
+
+      <!-- Orange rotation marker: first side -->
+
+      <visual>
+        <origin xyz="0.040 0.023 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.025 0.004 0.012"/>
+        </geometry>
+        <material name="safety_orange">
+          <color rgba="1.0 0.32 0.02 1.0"/>
+        </material>
+      </visual>
+
+      <!-- Orange rotation marker: second side -->
+
+      <visual>
+        <origin xyz="0.040 -0.023 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.025 0.004 0.012"/>
+        </geometry>
+        <material name="safety_orange">
+          <color rgba="1.0 0.32 0.02 1.0"/>
+        </material>
+      </visual>
+
+      <!-- Collision geometry -->
+
+      <collision>
+        <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+        <geometry>
+          <cylinder radius="0.080" length="0.045"/>
+        </geometry>
+      </collision>
+
+    </link>
+
+    <!-- Wheel revolute joint -->
+
+    <joint name="${name}_wheel_joint" type="continuous">
+      <parent link="base_link"/>
+      <child link="${name}_wheel_link"/>
+      <origin xyz="${x} ${y} -0.035" rpy="0 0 0"/>
+      <axis xyz="0 -1 0"/>
+    </joint>
+
+  </xacro:macro>
+
+
+  <!-- Instantiate four wheels -->
+
+  <xacro:lumen_wheel name="front_left" x="0.170" y="0.190"/>
+
+  <xacro:lumen_wheel name="rear_left" x="-0.170" y="0.190"/>
+
+  <xacro:lumen_wheel name="front_right" x="0.170" y="-0.190"/>
+
+  <xacro:lumen_wheel name="rear_right" x="-0.170" y="-0.190"/>
+
+</robot>
